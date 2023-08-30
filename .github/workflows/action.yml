@@ -45,7 +45,7 @@ jobs:
         # if: github.event.label.name == 'ready for QA'
         run: |
           git fetch --all
-          git pull origin develop
+          #git pull origin develop
           git merge develop
       
       - name: List Files
