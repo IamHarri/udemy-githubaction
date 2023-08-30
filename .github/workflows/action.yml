@@ -18,7 +18,7 @@ on:
     paths:
       - '**.js'
   pull_request:
-     types: [opened, synchronize]
+     types: [opened, synchronize, labeled]
   workflow_dispatch:
     inputs:
       environment:
@@ -61,6 +61,7 @@ jobs:
           echo $GITHUB_REF_NAME
 
       - name: simple js action
+        if: ${{ github.event.label.name == 'ready for QA' }}
         uses: actions/hello-world-javascript-action@v1 # even we can reference specific commit
         id: greet
         with:
