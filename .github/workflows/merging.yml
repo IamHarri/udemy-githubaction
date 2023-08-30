@@ -13,7 +13,7 @@ jobs:
         uses: devmasx/merge-branch@master
         with:
           type: now
-          from_branch: $GITHUB_HEAD_REF
+          from_branch: ${{ GITHUB_HEAD_REF }}
           target_branch: develop
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
