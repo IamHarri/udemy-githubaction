@@ -46,7 +46,7 @@ jobs:
         run: |
           git fetch --all
           #git pull origin develop
-          git merge origin/develop
+          git merge origin/develop --allow-unrelated-histories
       
       - name: List Files
         run: |
