@@ -6,6 +6,9 @@ jobs:
   Merged-branch:
     if: github.event.label.name == 'ready to merge'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read/write
     steps:
       - uses: actions/checkout@master
 
