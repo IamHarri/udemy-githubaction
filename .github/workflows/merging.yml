@@ -1,0 +1,19 @@
+name: Merge branch
+on:
+  pull_request:
+     types: [labeled]
+jobs:
+  Merged-branch:
+    if: github.event.label.name == 'ready to merge'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Merge development
+        uses: devmasx/merge-branch@master
+        with:
+          type: now
+          from_branch: $GITHUB_HEAD_REF
+          target_branch: develop
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
