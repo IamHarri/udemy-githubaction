@@ -46,7 +46,14 @@ jobs:
         run: |
           git fetch --all
           #git pull origin develop
-          git merge develop --allow-unrelated-histories
+          # git merge develop --allow-unrelated-histories
+          
+          git config --global user.email "${GITHUB_ACTOR}"
+          git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+          git checkout develop
+          git checkout "$GITHUB_HEAD_REF"
+          git merge develop --no-edit
+          git status
       
       - name: List Files
         run: |
