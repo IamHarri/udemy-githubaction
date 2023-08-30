@@ -45,11 +45,8 @@ jobs:
         # if: github.event.label.name == 'ready for QA'
         run: |
           git fetch --all
-          git checkout -b develop
-          git pull
-          git checkout ${{ github.head_ref }}
-          git merge develop
-          git log
+          git pull --all
+          git rebase origin/develop
       
       - name: List Files
         run: |
