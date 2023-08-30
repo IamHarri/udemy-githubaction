@@ -40,6 +40,12 @@ jobs:
     steps:
       - name: Checkout Repos
         uses: actions/checkout@v3
+        
+      - name: Merge develop locally      
+        # if: github.event.label.name == 'ready for QA'
+        run: |
+          git rebase origin develop
+          git log
       
       - name: List Files
         run: |
