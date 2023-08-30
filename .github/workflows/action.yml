@@ -46,7 +46,7 @@ jobs:
         run: |
           git fetch --all
           #git pull origin develop
-          git merge develop
+          git merge origin/develop
       
       - name: List Files
         run: |
