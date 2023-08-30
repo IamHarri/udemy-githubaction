@@ -8,9 +8,11 @@ on:
     types: [build,do_something,do_other_thing] # this can be used to trigger other repository 
   push:
     branches:
-      - 'features/*'
+      - 'feature/*'
       - 'features/**' # also match this features/aisjfis/siofjsdo
       - '!features/dev' # the same as branches ignore
+      - 'develop'
+      - 'main'
     # branches-ignore:
     #   - 'features/hehe'
     tags:
