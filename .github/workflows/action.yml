@@ -44,7 +44,7 @@ jobs:
       - name: Merge develop locally      
         # if: github.event.label.name == 'ready for QA'
         run: |
-          git rebase origin/develop
+          git merge origin/develop
           git log
       
       - name: List Files
