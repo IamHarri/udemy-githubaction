@@ -1,9 +1,26 @@
 name: Action flows
 
 on: 
+  # schedule:
+  #   - cron:  '* * * * *' # should be single quote not double quote
+  # push:
+  repository_dispatch:
+    types: [build,do_something,do_other_thing] # this can be used to trigger other repository 
   push:
+    branches:
+      - 'feature/*'
+      - 'features/**' # also match this features/aisjfis/siofjsdo
+      - '!features/dev' # the same as branches ignore
+      - 'develop'
+      - 'main'
+    # branches-ignore:
+    #   - 'features/hehe'
+    tags:
+      - 'v1.*'
+    paths:
+      - '**.js'
   pull_request:
-     types: [opened, synchronize]
+     types: [opened, synchronize, labeled]
   workflow_dispatch:
     inputs:
       environment:
@@ -23,6 +40,20 @@ jobs:
     steps:
       - name: Checkout Repos
         uses: actions/checkout@v3
+        
+      - name: Merge develop locally      
+        # if: github.event.label.name == 'ready for QA'
+        run: |
+          git fetch --all
+          git config --global user.email "${GITHUB_ACTOR}"
+          git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
+
+          git checkout "$GITHUB_HEAD_REF"
+          git checkout develop
+          echo "----------------------------"
+          git merge "$GITHUB_HEAD_REF" --no-edit
+          # git merge develop --no-edit
+          # git log
       
       - name: List Files
         run: |
@@ -46,6 +77,7 @@ jobs:
           echo $GITHUB_REF_NAME
 
       - name: simple js action
+        if: ${{ github.event.label.name == 'ready for QA' }}
         uses: actions/hello-world-javascript-action@v1 # even we can reference specific commit
         id: greet
         with:
@@ -56,3 +88,9 @@ jobs:
 
       - name: Show Environment
         run: echo "${{ github.event.inputs.environment }}"
+        
+      - name: remove label
+        if: always()
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: ready for QA

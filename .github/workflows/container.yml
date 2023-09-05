@@ -1,0 +1,33 @@
+name: Container
+on: push
+
+jobs:
+  node-docker:
+    runs-on: ubuntu-latest
+    container:
+      image: node:16
+    steps:
+      - name: Log node version
+        run: |
+          node -v 
+          cat /etc/os-release
+      - name: node 15
+        uses: docker://node:15
+        with:
+          entrypoint: node
+          args: -v
+
+  multible-docker:
+    runs-on: ubuntu-latest
+    services:
+      nginx:
+        image: nginx
+        ports:
+          - 80:80
+      mongo:
+        image: mongo
+        ports:
+          - "27017:27017"
+    steps:
+      - name: show nginx
+        run: curl localhost:80
