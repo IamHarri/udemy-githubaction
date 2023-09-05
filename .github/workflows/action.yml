@@ -48,9 +48,11 @@ jobs:
           git config --global user.email "${GITHUB_ACTOR}"
           git config --global user.name "${GITHUB_ACTOR}@users.noreply.github.com"
           git checkout develop
-          git checkout "$GITHUB_HEAD_REF"
-          git merge develop --no-edit
-          git log
+          git merge "$GITHUB_HEAD_REF" --no-edit
+          # git checkout develop
+          # git checkout "$GITHUB_HEAD_REF"
+          # git merge develop --no-edit
+          # git log
       
       - name: List Files
         run: |
